@@ -1,6 +1,0 @@
-Citations for any assets that we used:
-- Bridge: https://sketchfab.com/3d-models/bridge-6c8b34ad7d614de89d13c3684d20a697
-- Skybox: https://assetstore.unity.com/packages/vfx/shaders/free-skybox-cubemap-extended-107400
-- Unity Standard Asset Pack: https://assetstore.unity.com/packages/essentials/asset-packs/standard-assets-32351
-- Water: https://assetstore.unity.com/packages/vfx/shaders/water-effect-fits-for-lowpoly-style-87810
-- Grapple Functionality - https://www.youtube.com/watch?v=MR1XK-q265E
