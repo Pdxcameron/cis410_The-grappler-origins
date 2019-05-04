@@ -50,14 +50,12 @@ public class GrapplingHook : MonoBehaviour
         }
         if (hooked == true && fired == true) //player has attached to a valid grappling object
         {
-            //hook.transform.parent = hookedObject.transform;
 
             if(hookedObject.tag == "Hookable") 
             {
                 hook.transform.parent = hookedObject.transform;
                 transform.position = Vector3.MoveTowards(transform.position, hook.transform.position, Time.deltaTime * playerTavelSpeed);
                 float distanceToHook = Vector3.Distance(transform.position, hook.transform.position); //calc position between player and obj/hook
-                Debug.Log(distanceToHook);
 
                 this.GetComponent<Rigidbody>().useGravity = false;
                 if (distanceToHook < 2)
@@ -65,15 +63,7 @@ public class GrapplingHook : MonoBehaviour
                     ReturnHook();
                 }
             }
-            //transform.position = Vector3.MoveTowards(transform.position, hook.transform.position, Time.deltaTime * playerTavelSpeed);
-            //float distanceToHook = Vector3.Distance(transform.position, hook.transform.position); //calc position between player and obj/hook
 
-            //this.GetComponent<Rigidbody>().useGravity = false;
-
-            //if (distanceToHook < 2)
-            //{
-            //    ReturnHook();
-            //}
             if(hookedObject.tag == "Grabbable" && distanceToPlayer > 3)
             {
                 hookedObject.transform.parent = null;
@@ -85,17 +75,20 @@ public class GrapplingHook : MonoBehaviour
                 distanceToPlayer = Vector3.Distance(hookedObject.transform.position, transform.position);
                 Debug.Log(distanceToPlayer);
                 hookedObject.GetComponent<Rigidbody>().useGravity = false;
+
                 if(distanceToPlayer < 3)
                 {
                     Debug.Log("Close enough");
                     Hold();
                 }
             }
+
             if(hookedObject.tag == "Grabbable" && distanceToPlayer <= 3)
             {
                 Hold();
             }
         }
+
         else
         {
             hook.transform.parent = hookHolder.transform;
@@ -114,28 +107,6 @@ public class GrapplingHook : MonoBehaviour
             distanceToPlayer = 40;
         }
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if(other.tag == "Grabbable")
-    //    {
-    //        hookedObject.transform.parent = null;
-    //        //hookedObject.transform = GameObject.Find("Hook Holder");
-    //        hookedObject.transform.parent = GameObject.Find("Hook Holder").transform;
-    //        Debug.Log(hookedObject.transform.localPosition);
-    //        hookedObject.transform.position = Vector3.MoveTowards(transform.localPosition, hookedObject.transform.localPosition, 20f);
-
-
-    //        float distanceToPlayer = Vector3.Distance(transform.localPosition, hookedObject.transform.localPosition);
-    //        Debug.Log(distanceToPlayer);
-    //        hookedObject.GetComponent<Rigidbody>().useGravity = false;
-    //        //hookedObject.GetComponent<Rigidbody>().isKinematic = false;
-    //        if (distanceToPlayer < 3)
-    //        {
-    //            Hold();
-    //        }
-    //    }
-    //}
 
     void ReturnHook()
     {
