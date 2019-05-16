@@ -6,7 +6,7 @@ public class PlayerControls : MonoBehaviour
 {
     public float speed;
 
-
+    public GameObject checkpoint;
     private Rigidbody player;
     private bool grounded;
     private bool inAir;
@@ -16,6 +16,7 @@ public class PlayerControls : MonoBehaviour
     {
         player = GetComponent<Rigidbody>();
 
+        checkpoint = GameObject.Find("start_checkpoint");
         //For First person camera handling
         Cursor.lockState = CursorLockMode.Locked;
         
@@ -24,9 +25,8 @@ public class PlayerControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space") && inAir == false)
+        if (Input.GetKeyDown("space") && !inAir)
         {
-            Debug.Log("jumping");
             Vector3 jump = new Vector3(0f, 300.0f, 0f);
             player.AddForce(jump);
         }
@@ -46,26 +46,42 @@ public class PlayerControls : MonoBehaviour
         moveHorizontal *= Time.deltaTime;
         moveVertical *= Time.deltaTime;
 
-        transform.Translate(moveHorizontal, 0, moveVertical);
-
-        //Vector3 movement = new Vector3(moveHorizontal, 0f, moveVertical);
-        //player.position += (movement * speed);
+        transform.Translate(moveHorizontal, 0, moveVertical); // Reddit says to use  rigidbody.MovePosition() and rigidbody.MoveRotation()
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             grounded = true;
             inAir = false;
         }
+        if (collision.gameObject.CompareTag("Death"))
+        {
+            grounded = true;
+            inAir = false;
+            death();
+        }
+        if (collision.gameObject.CompareTag("Respawn"))
+        {
+            checkpoint = collision.gameObject;
+        }
     }
+
     private void OnCollisionExit(Collision collision)
     {
+
         if (collision.gameObject.CompareTag("Ground"))
         {
             grounded = false;
             inAir = true;
         }
+    }
+
+    private void death()
+    {
+        player.gameObject.SetActive(false);
+        player.gameObject.transform.position = checkpoint.transform.position;
+        player.gameObject.SetActive(true);
     }
 }

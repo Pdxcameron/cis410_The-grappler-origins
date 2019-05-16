@@ -5,6 +5,8 @@ using UnityEngine;
 public class PressurePlateScript : MonoBehaviour
 {
     public GameObject toggle;
+    public bool inverse = false;
+    private List<GameObject> currentCollisions = new List<GameObject>();
 
     void Start()
     {
@@ -19,11 +21,42 @@ public class PressurePlateScript : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        toggle.SetActive(false);
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Grabbable"))
+        {
+            if (!currentCollisions.Contains(other.gameObject))
+            {
+                currentCollisions.Add(other.gameObject);
+            }
+            if (!inverse)
+            {
+                toggle.SetActive(false);
+            }
+            else
+            {
+                toggle.SetActive(true);
+            }
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        toggle.SetActive(true);
+        if (currentCollisions.Contains(other.gameObject))
+        {
+            currentCollisions.Remove(other.gameObject);
+        }
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Grabbable"))
+        {
+            if(currentCollisions.Count == 0)
+            {
+                if (!inverse)
+                {
+                    toggle.SetActive(true);
+                }
+                else
+                {
+                    toggle.SetActive(false);
+                }
+            }
+        }
     }
 }

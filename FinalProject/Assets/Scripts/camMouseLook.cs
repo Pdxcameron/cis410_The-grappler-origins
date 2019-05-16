@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class camMouseLook : MonoBehaviour
 {
@@ -9,11 +10,29 @@ public class camMouseLook : MonoBehaviour
     public float sensitivity = 5.0f;
     public float smoothing = 2.0f;
 
+    //For reticle color changing
+    Camera CameraToCastFrom;
+    public RawImage reticle;
+    RaycastHit hitInfo;
+
     GameObject player;
+
+    Color Hovered = Color.green;
+    Color UnHovered = new Color(251, 251, 251, 140);
+
+    void changeColor()
+    {
+        reticle.color = Hovered;
+    }
+
+    void resetColor()
+    {
+        reticle.color = UnHovered;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(this.name);
+        CameraToCastFrom = GetComponent<Camera>();
         player = this.transform.parent.gameObject;
         //player.transform.SetPositionAndRotation(player.transform.position, Quaternion.identity);
     }
@@ -28,8 +47,20 @@ public class camMouseLook : MonoBehaviour
         smoothV.y = Mathf.Lerp(smoothV.y, md.y, 1f / smoothing);
         mouseLook += smoothV;
 
-        //transform.localRotation = Quaternion.AngleAxis(Mathf.Clamp(-mouseLook.y, 0f, 150f), Vector3.right);
-        transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
+        transform.localRotation = Quaternion.AngleAxis(Mathf.Clamp(-mouseLook.y, -90f, 80f), Vector3.right);
+        //transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
         player.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, Vector3.up);
+
+        //Raycast for detecting objects to decide whether or not to change color
+        Ray rayToCast = CameraToCastFrom.ScreenPointToRay(reticle.transform.position);
+        if (Physics.Raycast(rayToCast, out hitInfo, 20f) &&
+        (hitInfo.collider.gameObject.CompareTag("Grabbable") || hitInfo.collider.gameObject.CompareTag("Hookable")))
+        {
+            changeColor();
+        }
+        else
+        {
+            resetColor();
+        }
     }
 }

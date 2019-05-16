@@ -28,6 +28,8 @@ public class GrapplingHook : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && fired == false)
         {
             fired = true;
+            hooked = false;
+            hookedObject = null;
         }
 
         if (fired)
@@ -68,8 +70,10 @@ public class GrapplingHook : MonoBehaviour
             {
                 hookedObject.transform.parent = null;
                 hookedObject.transform.parent = GameObject.Find("Player").transform;
-                Debug.Log(hookedObject.transform.localPosition);
                 hookedObject.transform.position = Vector3.MoveTowards(hookedObject.transform.position, transform.position, Time.deltaTime * playerTavelSpeed);
+                LineRenderer rope = hook.GetComponent<LineRenderer>(); //This and line below smooth rope animation
+                rope.SetPosition(1, hookedObject.transform.position); //added to have better rope
+                hook.transform.Translate(Vector3.back * Time.deltaTime * (hookTravelSpeed * 0.65f));
 
 
                 distanceToPlayer = Vector3.Distance(hookedObject.transform.position, transform.position);
@@ -78,14 +82,17 @@ public class GrapplingHook : MonoBehaviour
 
                 if(distanceToPlayer < 3)
                 {
-                    Debug.Log("Close enough");
                     Hold();
                 }
             }
 
             if(hookedObject.tag == "Grabbable" && distanceToPlayer <= 3)
             {
-                Hold();
+                //Hold();
+                hookedObject.transform.parent = null;
+                ReturnHook();
+                hookedObject.GetComponent<Rigidbody>().useGravity = true;
+                distanceToPlayer = 20f;
             }
         }
 
@@ -104,36 +111,20 @@ public class GrapplingHook : MonoBehaviour
             hookedObject.transform.parent = null;
             hookedObject.GetComponent<Rigidbody>().useGravity = true;
             ReturnHook();
-            distanceToPlayer = 40;
+            distanceToPlayer = 20f;
         }
     }
 
     void ReturnHook()
-    {
+    { 
         hook.transform.rotation = hookHolder.transform.rotation;
         hook.transform.position = hookHolder.transform.position;
+        //hook.transform.
         fired = false;
         hooked = false;
 
         LineRenderer rope = hook.GetComponent<LineRenderer>();
         rope.SetVertexCount(0);
-    }
-
-    void CheckGrounded()
-    {
-        RaycastHit hit;
-        float distance = 1f;
-
-        Vector3 direction = new Vector3(0, -1);
-
-        if(Physics.Raycast(transform.position, direction, out hit, distance))
-        {
-            grounded = true;
-        }
-        else
-        {
-            grounded = false;
-        }
     }
 }
 
