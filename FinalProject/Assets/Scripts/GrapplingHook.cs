@@ -77,7 +77,6 @@ public class GrapplingHook : MonoBehaviour
 
 
                 distanceToPlayer = Vector3.Distance(hookedObject.transform.position, transform.position);
-                Debug.Log(distanceToPlayer);
                 hookedObject.GetComponent<Rigidbody>().useGravity = false;
 
                 if(distanceToPlayer < 3)
