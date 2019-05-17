@@ -60,7 +60,7 @@ public class GrapplingHook : MonoBehaviour
                 float distanceToHook = Vector3.Distance(transform.position, hook.transform.position); //calc position between player and obj/hook
 
                 this.GetComponent<Rigidbody>().useGravity = false;
-                if (distanceToHook < 2)
+                if (distanceToHook < 2 || Input.GetMouseButtonDown(0))       //Changed this so player can get hook back
                 {
                     ReturnHook();
                 }
@@ -72,17 +72,17 @@ public class GrapplingHook : MonoBehaviour
                 hookedObject.transform.parent = GameObject.Find("Player").transform;
                 hookedObject.transform.position = Vector3.MoveTowards(hookedObject.transform.position, transform.position, Time.deltaTime * playerTavelSpeed);
                 LineRenderer rope = hook.GetComponent<LineRenderer>(); //This and line below smooth rope animation
-                rope.SetPosition(1, hookedObject.transform.position); //added to have better rope
+                rope.SetPosition(1, hookedObject.transform.position);  //added to have better rope
                 hook.transform.Translate(Vector3.back * Time.deltaTime * (hookTravelSpeed * 0.65f));
 
 
                 distanceToPlayer = Vector3.Distance(hookedObject.transform.position, transform.position);
                 hookedObject.GetComponent<Rigidbody>().useGravity = false;
 
-                if(distanceToPlayer < 3)
-                {
-                    Hold();
-                }
+                //if(distanceToPlayer < 3)
+                //{
+                //    Hold();
+                //}
             }
 
             if(hookedObject.tag == "Grabbable" && distanceToPlayer <= 3)
@@ -102,23 +102,22 @@ public class GrapplingHook : MonoBehaviour
         }
     }
 
-    void Hold()
-    {
-        hookedObject.transform.SetParent(this.transform);
-        if (Input.GetMouseButtonUp(0))
-        {
-            hookedObject.transform.parent = null;
-            hookedObject.GetComponent<Rigidbody>().useGravity = true;
-            ReturnHook();
-            distanceToPlayer = 20f;
-        }
-    }
+    //void Hold()
+    //{
+    //    hookedObject.transform.SetParent(this.transform);
+    //    if (Input.GetMouseButtonUp(0))
+    //    {
+    //        hookedObject.transform.parent = null;
+    //        hookedObject.GetComponent<Rigidbody>().useGravity = true;
+    //        ReturnHook();
+    //        distanceToPlayer = 20f;
+    //    }
+    //}
 
     void ReturnHook()
     { 
         hook.transform.rotation = hookHolder.transform.rotation;
         hook.transform.position = hookHolder.transform.position;
-        //hook.transform.
         fired = false;
         hooked = false;
 

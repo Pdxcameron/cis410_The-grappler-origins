@@ -51,6 +51,35 @@ public class PlayerControls : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        //if (collision.gameObject.CompareTag("Ground"))
+        //{
+        //    grounded = true;
+        //    inAir = false;
+        //}
+        //if (collision.gameObject.CompareTag("Death"))
+        //{
+        //    grounded = true;
+        //    inAir = false;
+        //    death();
+        //}
+        //if (collision.gameObject.CompareTag("Respawn"))
+        //{
+        //    checkpoint = collision.gameObject;
+        //}
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            grounded = false;
+            inAir = true;
+        }
+    }
+
+    void OnCollisionStay(Collision collision)
+    {
         if (collision.gameObject.CompareTag("Ground"))
         {
             grounded = true;
@@ -65,16 +94,6 @@ public class PlayerControls : MonoBehaviour
         if (collision.gameObject.CompareTag("Respawn"))
         {
             checkpoint = collision.gameObject;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            grounded = false;
-            inAir = true;
         }
     }
 
