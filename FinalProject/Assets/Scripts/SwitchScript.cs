@@ -1,18 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SwitchScript : MonoBehaviour
 {
     public GameObject bridge;
     public float sphereRadius;
+    public Text wintext;
+    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
         if (bridge == null)
             bridge = GameObject.Find("Bridge");
-        if (bridge.active)
+        if (bridge.activeSelf)//bridge.active
             bridge.SetActive(false);
     }
 
@@ -20,26 +23,28 @@ public class SwitchScript : MonoBehaviour
     void Update()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, sphereRadius);
-        int i = 0;
-        while (i < hitColliders.Length)
+        //int i = 0;
+        if ((player.transform.position - this.transform.position).sqrMagnitude < 3 * 3)
         {
-            if (hitColliders[i].gameObject.name == "Player")
+            wintext.text = "press 'e' to interact";
+
+            if (Input.GetKeyDown("e"))
             {
-                if (Input.GetKeyDown("e"))
+                if (bridge.activeSelf)//bridge.active
                 {
-                    if (bridge.active)
-                    {
-                        bridge.SetActive(false);
-                        GetComponent<Renderer>().material.color = Color.red;
-                    }
-                    else
-                    {
-                        bridge.SetActive(true);
-                        GetComponent<Renderer>().material.color = Color.green;
-                    }
+                    bridge.SetActive(false);
+                    GetComponent<Renderer>().material.color = Color.red;
+                }
+                else
+                {
+                    bridge.SetActive(true);
+                    GetComponent<Renderer>().material.color = Color.green;
                 }
             }
-            i++;
+        }
+        else
+        {
+            wintext.text = "";
         }
     }
 }

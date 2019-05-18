@@ -55,12 +55,14 @@ public class GrapplingHook : MonoBehaviour
 
             if(hookedObject.tag == "Hookable") 
             {
+                this.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+                this.gameObject.GetComponent<PlayerControls>().speed = 4;
                 hook.transform.parent = hookedObject.transform;
                 transform.position = Vector3.MoveTowards(transform.position, hook.transform.position, Time.deltaTime * playerTavelSpeed);
                 float distanceToHook = Vector3.Distance(transform.position, hook.transform.position); //calc position between player and obj/hook
 
                 this.GetComponent<Rigidbody>().useGravity = false;
-                if (distanceToHook < 2 || Input.GetMouseButtonDown(0))       //Changed this so player can get hook back
+                if (distanceToHook < 2.5f || Input.GetMouseButtonDown(0))       //Changed this so player can get hook back
                 {
                     ReturnHook();
                 }
@@ -68,21 +70,26 @@ public class GrapplingHook : MonoBehaviour
 
             if(hookedObject.tag == "Grabbable" && distanceToPlayer > 3)
             {
-                hookedObject.transform.parent = null;
-                hookedObject.transform.parent = GameObject.Find("Player").transform;
-                hookedObject.transform.position = Vector3.MoveTowards(hookedObject.transform.position, transform.position, Time.deltaTime * playerTavelSpeed);
-                LineRenderer rope = hook.GetComponent<LineRenderer>(); //This and line below smooth rope animation
-                rope.SetPosition(1, hookedObject.transform.position);  //added to have better rope
-                hook.transform.Translate(Vector3.back * Time.deltaTime * (hookTravelSpeed * 0.65f));
+                if (Input.GetMouseButtonDown(0))
+                {
+                    hookedObject.transform.parent = null;
+                    ReturnHook();
+                    hookedObject.GetComponent<Rigidbody>().useGravity = true;
+                    distanceToPlayer = 20f;
+                }
+                else
+                {
+                    hookedObject.transform.parent = null;
+                    hookedObject.transform.parent = GameObject.Find("Player").transform;
+                    hookedObject.transform.position = Vector3.MoveTowards(hookedObject.transform.position, transform.position, Time.deltaTime * playerTavelSpeed);
+                    LineRenderer rope = hook.GetComponent<LineRenderer>(); //This and line below smooth rope animation
+                    rope.SetPosition(1, hookedObject.transform.position);  //added to have better rope
+                    hook.transform.Translate(Vector3.back * Time.deltaTime * (hookTravelSpeed * 0.25f));
 
 
-                distanceToPlayer = Vector3.Distance(hookedObject.transform.position, transform.position);
-                hookedObject.GetComponent<Rigidbody>().useGravity = false;
-
-                //if(distanceToPlayer < 3)
-                //{
-                //    Hold();
-                //}
+                    distanceToPlayer = Vector3.Distance(hookedObject.transform.position, transform.position);
+                    hookedObject.GetComponent<Rigidbody>().useGravity = false;
+                }
             }
 
             if(hookedObject.tag == "Grabbable" && distanceToPlayer <= 3)
@@ -114,8 +121,9 @@ public class GrapplingHook : MonoBehaviour
     //    }
     //}
 
-    void ReturnHook()
-    { 
+    public void ReturnHook()
+    {
+        this.gameObject.GetComponent<PlayerControls>().speed = 8;
         hook.transform.rotation = hookHolder.transform.rotation;
         hook.transform.position = hookHolder.transform.position;
         fired = false;

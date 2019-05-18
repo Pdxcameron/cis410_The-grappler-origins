@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerControls : MonoBehaviour
 {
     public float speed;
+    public GameObject heldCube;
 
     public GameObject checkpoint;
     private Rigidbody player;
@@ -99,6 +100,11 @@ public class PlayerControls : MonoBehaviour
 
     private void death()
     {
+        if (heldCube.GetComponent<Pickup>().holding)
+        {
+            heldCube.GetComponent<Pickup>().Drop();
+        }
+        player.gameObject.GetComponent<GrapplingHook>().ReturnHook();
         player.gameObject.SetActive(false);
         player.gameObject.transform.position = checkpoint.transform.position;
         player.gameObject.SetActive(true);

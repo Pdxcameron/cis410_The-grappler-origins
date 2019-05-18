@@ -470,7 +470,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2091972248}
-  m_Text: "Nice. \n\nYou beat our proof of concept. \n\n\n\n\n\n\n\n[CLICK ANYWHERE
+  m_Text: "Nice. \n\nYou beat the tutorial (level 1). \n\n\n\n\n\n\n\n[CLICK ANYWHERE
     TO RETURN TO MENU]"
   m_OffsetZ: 0
   m_CharacterSize: 1.1

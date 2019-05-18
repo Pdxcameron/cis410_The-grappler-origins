@@ -8,7 +8,8 @@ public class Pickup : MonoBehaviour
     private float BoxSpeed = 1000f;
 
     private bool playerInRange;
-    private bool holding = false;
+    public bool holding = false;
+    private GameObject player;
 
     Rigidbody ThisRigidBody;
 
@@ -27,6 +28,7 @@ public class Pickup : MonoBehaviour
     private void Start()
     {
         ThisRigidBody = GetComponent<Rigidbody>();
+        player = GameObject.FindWithTag("Player");
     }
 
     void Hold()
@@ -34,21 +36,15 @@ public class Pickup : MonoBehaviour
         this.transform.parent = null;
         ThisRigidBody.useGravity = false;
         this.gameObject.layer = 12;
-        //ThisRigidBody.isKinematic = true;
-        //ThisRigidBody.detectCollisions = false;
-        //this.transform.parent = holdPos.transform;
-        //ThisRigidBody.position = holdPos.transform.position;
         holding = true;
         StartCoroutine(HoldingPosition());
     }
 
-    void Drop()
+    public void Drop()
     {
         this.transform.parent = null;
         ThisRigidBody.useGravity = true;
         this.gameObject.layer = 0;
-        //ThisRigidBody.isKinematic = false;
-        //ThisRigidBody.detectCollisions = true;
         holding = false;
     }
 
@@ -58,6 +54,7 @@ public class Pickup : MonoBehaviour
         if(playerInRange && Input.GetKeyDown("e") && !holding)
         {
             Debug.Log("Picked up object");
+            player.gameObject.GetComponent<PlayerControls>().heldCube = this.gameObject;
             Hold();
         }
         else if(holding && Input.GetKeyDown("e"))
