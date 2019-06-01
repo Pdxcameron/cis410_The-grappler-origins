@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4874126678125670354, guid: 8a512fc87d653493b88f9b707600ee43, type: 3}
+  - {fileID: 2100000, guid: bccdb449802ea144b8709da9bac60356, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -803,4 +803,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sphereRadius: 2
   wintext: {fileID: 0}
+  hint: 
   player: {fileID: 0}

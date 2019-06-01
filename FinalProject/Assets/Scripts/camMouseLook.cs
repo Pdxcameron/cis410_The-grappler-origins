@@ -40,27 +40,30 @@ public class camMouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxis("Mouse Y"));
-
-        md = Vector2.Scale(md, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
-        smoothV.x = Mathf.Lerp(smoothV.x, md.x, 1f / smoothing);
-        smoothV.y = Mathf.Lerp(smoothV.y, md.y, 1f / smoothing);
-        mouseLook += smoothV;
-
-        transform.localRotation = Quaternion.AngleAxis(Mathf.Clamp(-mouseLook.y, -90f, 80f), Vector3.right);
-        //transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
-        player.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, Vector3.up);
-
-        //Raycast for detecting objects to decide whether or not to change color
-        Ray rayToCast = CameraToCastFrom.ScreenPointToRay(reticle.transform.position);
-        if (Physics.Raycast(rayToCast, out hitInfo, 20f) &&
-        (hitInfo.collider.gameObject.CompareTag("Grabbable") || hitInfo.collider.gameObject.CompareTag("Hookable")))
+        if (!FindObjectOfType<PlayerControls>().frozen)
         {
-            changeColor();
-        }
-        else
-        {
-            resetColor();
+            var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxis("Mouse Y"));
+
+            md = Vector2.Scale(md, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
+            smoothV.x = Mathf.Lerp(smoothV.x, md.x, 1f / smoothing);
+            smoothV.y = Mathf.Lerp(smoothV.y, md.y, 1f / smoothing);
+            mouseLook += smoothV;
+
+            transform.localRotation = Quaternion.AngleAxis(Mathf.Clamp(-mouseLook.y, -90f, 80f), Vector3.right);
+            //transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
+            player.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, Vector3.up);
+
+            //Raycast for detecting objects to decide whether or not to change color
+            Ray rayToCast = CameraToCastFrom.ScreenPointToRay(reticle.transform.position);
+            if (Physics.Raycast(rayToCast, out hitInfo, 20f) &&
+            (hitInfo.collider.gameObject.CompareTag("Grabbable") || hitInfo.collider.gameObject.CompareTag("Hookable")))
+            {
+                changeColor();
+            }
+            else
+            {
+                resetColor();
+            }
         }
     }
 }

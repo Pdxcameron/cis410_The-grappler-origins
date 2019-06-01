@@ -5,7 +5,7 @@ using UnityEngine;
 public class Pickup : MonoBehaviour
 {
     public GameObject holdPos;
-    private float BoxSpeed = 1000f;
+    public float BoxSpeed = 1000f;
 
     private bool playerInRange;
     public bool holding = false;
@@ -53,13 +53,11 @@ public class Pickup : MonoBehaviour
     {
         if(playerInRange && Input.GetKeyDown("e") && !holding)
         {
-            Debug.Log("Picked up object");
             player.gameObject.GetComponent<PlayerControls>().heldCube = this.gameObject;
             Hold();
         }
         else if(holding && Input.GetKeyDown("e"))
         {
-            Debug.Log("attempting to drop object");
             Drop();
         }
     }

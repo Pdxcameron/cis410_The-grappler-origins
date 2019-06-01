@@ -15,7 +15,7 @@ public class SwitchScript : MonoBehaviour
     {
         if (bridge == null)
             bridge = GameObject.Find("Bridge");
-        if (bridge.activeSelf)//bridge.active
+        if (bridge.activeSelf)
             bridge.SetActive(false);
     }
 
@@ -23,14 +23,13 @@ public class SwitchScript : MonoBehaviour
     void Update()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, sphereRadius);
-        //int i = 0;
         if ((player.transform.position - this.transform.position).sqrMagnitude < 3 * 3)
         {
             wintext.text = "press 'e' to interact";
 
             if (Input.GetKeyDown("e"))
             {
-                if (bridge.activeSelf)//bridge.active
+                if (bridge.activeSelf)
                 {
                     bridge.SetActive(false);
                     GetComponent<Renderer>().material.color = Color.red;

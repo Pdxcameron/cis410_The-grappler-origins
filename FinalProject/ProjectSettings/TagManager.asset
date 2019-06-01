@@ -11,6 +11,9 @@ TagManager:
   - Death
   - Ground
   - Grabbable
+  - FishSpawn
+  - Fish
+  - FishPole
   layers:
   - Default
   - TransparentFX

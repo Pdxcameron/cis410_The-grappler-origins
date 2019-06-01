@@ -9,12 +9,18 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 4df09e2760a9e48c8aa9240be74f8068
   - enabled: 1
-    path: Assets/Scenes/Level1Start.unity
-    guid: 21f8a6868f2cf4c5f8898e52a2a1dbad
-  - enabled: 1
     path: Assets/Scenes/POCScene.unity
     guid: 483d7c3e7cb0a41ba8b9cbf18ec7712d
   - enabled: 1
+    path: Assets/Scenes/Level1Start.unity
+    guid: 21f8a6868f2cf4c5f8898e52a2a1dbad
+  - enabled: 1
     path: Assets/Scenes/Level1Complete.unity
     guid: 44d5c5db916854ca9af2e50fdaf47604
+  - enabled: 1
+    path: Assets/Scenes/Village level.unity
+    guid: d9d59013f4bc046098a1b4e53e616dcf
+  - enabled: 1
+    path: Assets/Scenes/Mountain.unity
+    guid: d031a4c374ac047b7855b3a68b321a05
   m_configObjects: {}
