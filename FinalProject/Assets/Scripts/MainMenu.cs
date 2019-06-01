@@ -7,16 +7,21 @@ public class MainMenu : MonoBehaviour
 {
     public bool newGame;
     public bool exit;
+    public bool tutorial;
 
     void OnMouseUp()
     {
         if (newGame)
         {
-            SceneManager.LoadScene("Level1Start");
+            SceneManager.LoadScene("Level1");
         }
         if (exit)
         {
             Application.Quit();
+        }
+        if (tutorial)
+        {
+            SceneManager.LoadScene("POCScene");
         }
     }
 

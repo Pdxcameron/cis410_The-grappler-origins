@@ -10,8 +10,7 @@ public class LoadTrophyRoom : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.SetActive(false);
-            SceneManager.LoadScene("Level1Complete");
-            Cursor.lockState = CursorLockMode.None;
+            SceneManager.LoadScene("EscapeTheCastle");
         }
     }
 }

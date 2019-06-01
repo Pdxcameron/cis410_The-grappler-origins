@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/POCScene.unity
     guid: 483d7c3e7cb0a41ba8b9cbf18ec7712d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Level1Start.unity
     guid: 21f8a6868f2cf4c5f8898e52a2a1dbad
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Level1Complete.unity
     guid: 44d5c5db916854ca9af2e50fdaf47604
   - enabled: 1
@@ -23,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Mountain.unity
     guid: d031a4c374ac047b7855b3a68b321a05
+  - enabled: 1
+    path: Assets/Scenes/EscapeTheCastle.unity
+    guid: f32b9d485db814e53a781a5a5fc84b9c
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: c642b960f6fd7450a9db92ea2b70ea56
   m_configObjects: {}
