@@ -13,11 +13,6 @@ public class catchFish : MonoBehaviour
         fish = GameObject.FindGameObjectWithTag("Fish");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "fishline")

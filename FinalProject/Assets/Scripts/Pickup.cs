@@ -34,6 +34,7 @@ public class Pickup : MonoBehaviour
     void Hold()
     {
         this.transform.parent = null;
+        ThisRigidBody.isKinematic = false;
         ThisRigidBody.useGravity = false;
         this.gameObject.layer = 12;
         holding = true;

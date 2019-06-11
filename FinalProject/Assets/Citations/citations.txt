@@ -5,3 +5,7 @@ Citations for any assets that we used:
 - Water: https://assetstore.unity.com/packages/vfx/shaders/water-effect-fits-for-lowpoly-style-87810
 - Grapple Functionality - https://www.youtube.com/watch?v=MR1XK-q265E
 - First Person - https://www.youtube.com/watch?v=blO039OzUZc
+- All game music- https://soundimage.org/fantasywonder/
+- Grapple fire audio- https://freesound.org/people/Leszek_Szary/sounds/146730/
+- Footstep audio- https://freesound.org/people/LittleRobotSoundFactory/sounds/270420/
+- Asset pack- https://assetstore.unity.com/packages/3d/props/low-poly-ultimate-pack-54733

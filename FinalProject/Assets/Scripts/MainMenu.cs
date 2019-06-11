@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     public bool newGame;
     public bool exit;
     public bool tutorial;
+    public bool menu;
 
     void OnMouseUp()
     {
@@ -22,6 +23,10 @@ public class MainMenu : MonoBehaviour
         if (tutorial)
         {
             SceneManager.LoadScene("POCScene");
+        }
+        if (menu)
+        {
+            SceneManager.LoadScene("MainMenu");
         }
     }
 

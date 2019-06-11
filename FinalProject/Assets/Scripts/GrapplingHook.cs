@@ -24,6 +24,12 @@ public class GrapplingHook : MonoBehaviour
     public float maxDistance;
     private float currentDistance;
     private float distanceToPlayer = 20f;
+    private float cpySpeed;
+
+    private void Start()
+    {
+        cpySpeed = this.gameObject.GetComponent<PlayerControls>().speed;
+    }
 
     // Update is called once per frame
     void Update()
@@ -51,6 +57,7 @@ public class GrapplingHook : MonoBehaviour
             if (fired == true && hooked == false)
             {
                 hook.transform.Translate(Vector3.forward * Time.deltaTime * hookTravelSpeed);
+                //hook.transform.Translate(Vector3.up * Time.deltaTime * hookTravelSpeed);
                 currentDistance = Vector3.Distance(transform.position, hook.transform.position); //calc distance between player and hook could use dot product or something here if we want
 
                 if (currentDistance >= maxDistance)
@@ -120,7 +127,8 @@ public class GrapplingHook : MonoBehaviour
 
     public void ReturnHook()
     {
-        this.gameObject.GetComponent<PlayerControls>().speed = 8;
+        //this.gameObject.GetComponent<PlayerControls>().speed = 8;
+        this.gameObject.GetComponent<PlayerControls>().speed = cpySpeed;
         hook.transform.rotation = hookHolder.transform.rotation;
         hook.transform.position = hookHolder.transform.position;
         fired = false;

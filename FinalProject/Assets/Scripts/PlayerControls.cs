@@ -11,11 +11,14 @@ public class PlayerControls : MonoBehaviour
 
     public AudioSource ConstantAudio;
     public AudioClip ConstantClip;
+    public AudioSource FootstepAudio;
+    public AudioClip FootstepClip;
 
     public GameObject checkpoint;
     private Rigidbody player;
-    private bool grounded; // IS THIS VALUE USED IN OTHER SCRIPTS? ITS VALUE ISNT ACTUALLY USED FOR ANYTHING IN THIS ONE
+    private bool grounded;
     private bool inAir;
+    private bool playing;
     public bool frozen;
 
     // Start is called before the first frame update
@@ -23,6 +26,7 @@ public class PlayerControls : MonoBehaviour
     {
         ConstantAudio.loop = true;
 
+        playing = false;
         frozen = false;
         player = GetComponent<Rigidbody>();
 
@@ -67,6 +71,11 @@ public class PlayerControls : MonoBehaviour
             moveHorizontal *= Time.deltaTime;
             moveVertical *= Time.deltaTime;
 
+            if((moveVertical != 0.0f || moveHorizontal != 0.0f) && grounded && !playing)
+            {
+                StartCoroutine(Footsteps());
+            }
+
             transform.Translate(moveHorizontal, 0, moveVertical); // Reddit says to use  rigidbody.MovePosition() and rigidbody.MoveRotation()
         }
     }
@@ -99,7 +108,14 @@ public class PlayerControls : MonoBehaviour
             checkpoint = collision.gameObject;
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Respawn"))
+        {
+            checkpoint = other.gameObject;
+        }
 
+    }
     public void death()
     {
         if (heldCube.GetComponent<Pickup>().holding)
@@ -110,5 +126,16 @@ public class PlayerControls : MonoBehaviour
         player.gameObject.SetActive(false);
         player.gameObject.transform.position = checkpoint.transform.position;
         player.gameObject.SetActive(true);
+    }
+
+    IEnumerator Footsteps()
+    {
+        playing = true;
+        FootstepAudio.volume = Random.Range(0.8f, 1.0f);
+        FootstepAudio.pitch = Random.Range(0.5f, 0.6f);
+        FootstepAudio.clip = FootstepClip;
+        FootstepAudio.Play();
+        yield return new WaitForSeconds(0.4f);
+        playing = false;
     }
 }
